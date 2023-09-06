@@ -30,13 +30,18 @@ img {
   height: auto;
 }
 
-/* p {
+p {
   margin: 0;
-} */
+}
 
 ul, ol {
-  /* margin: 0;
-  padding: 0; */
+  margin: 0;
+  padding: 0;
   list-style: none;
 }
+
+h1, h2, h3{
+  margin: 0;
+}
+
 `;

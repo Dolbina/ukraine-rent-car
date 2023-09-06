@@ -9,13 +9,13 @@ export const SharedLayout = () => {
       <Header>
         <nav>
           <Link to="/">Home</Link>
-          <Link to="/movies">Movies</Link>
+          <Link to="/catalog">Catalog</Link>
+          <Link to="/favorites">Favorites</Link>
         </nav>
       </Header>
       <Suspense fallback={<div>Loading page...</div>}>
         <Outlet />
       </Suspense>
-      
     </Container>
   );
 };

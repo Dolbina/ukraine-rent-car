@@ -5,7 +5,7 @@ import { ErrorMessage } from 'components/ErrorMessage.styled';
 import {searchMovies} from '../services/api'
 import { useEffect, useState } from 'react';
 
- const Movies = () => {
+ const Catalog = () => {
    const [searchParams, setSearchParams] = useSearchParams();
    const [dataMovies, setDataMovies] = useState([]);
    const [error, setError] = useState(null);
@@ -24,7 +24,6 @@ import { useEffect, useState } from 'react';
              'Sorry, there are no movie matching your search query. Please try again.'
            );
          } else {
-           
            setDataMovies(results);
            setError(null);
          }
@@ -35,12 +34,12 @@ import { useEffect, useState } from 'react';
      };
      searchMovies2();
    }, [searchParams]);
-   
+
    const handleSubmit = value => {
      setSearchParams({ query: value.title.trim() });
    };
-   
- console.log(error);
+
+   console.log(error);
    return (
      <main>
        <SearchBox onSubmit={handleSubmit} />
@@ -58,4 +57,4 @@ import { useEffect, useState } from 'react';
    );
  };
 
-export default Movies;
+export default Catalog;
