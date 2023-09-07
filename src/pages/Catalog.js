@@ -1,60 +1,67 @@
-import { useLocation, useSearchParams, Link } from 'react-router-dom';
-
-import { SearchBox } from '../components/SearchBox/SearchBox';
-import { ErrorMessage } from 'components/ErrorMessage.styled';
-import {searchMovies} from '../services/api'
 import { useEffect, useState } from 'react';
+import { CarGallary } from 'components/CarGallary/CarGallary';
+import { Loader } from '../components/Loader/Loader';
+import { fetchCars } from '../services/api';
+import { ErrorMessage } from '../components/ErrorMessage.styled';
 
- const Catalog = () => {
-   const [searchParams, setSearchParams] = useSearchParams();
-   const [dataMovies, setDataMovies] = useState([]);
-   const [error, setError] = useState(null);
-   const location = useLocation();
+import { TitleHidden } from '../components/CarGallary/CarGallary.styled';
 
-   useEffect(() => {
-     const movieName = searchParams.get('query') ?? '';
-     if (!movieName) return;
+import { ButtonLoadMore, ButtonWrap } from 'components/ButtonLoadMore/ButtonLoadMore.styled';
 
-     const searchMovies2 = async () => {
-       try {
-         const { results } = await searchMovies(movieName);
 
-         if (results.length === 0) {
-           setError(
-             'Sorry, there are no movie matching your search query. Please try again.'
-           );
-         } else {
-           setDataMovies(results);
-           setError(null);
-         }
-       } catch (error) {
-         setError('Error, try reloading the page');
-         setDataMovies([]);
-       }
-     };
-     searchMovies2();
-   }, [searchParams]);
+const Catalog = () => {
+  const [cars, setCars] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [visibleCars, setVisibleCars] = useState(8);
+  const [showLoadMore, setShowLoadMore] = useState(true);
 
-   const handleSubmit = value => {
-     setSearchParams({ query: value.title.trim() });
-   };
+  const loadMoreCars = () => {
+    const totalVisibleCars = visibleCars + 8;
+    if (totalVisibleCars >= cars.length) {
+      setShowLoadMore(false);
+    }
+    setVisibleCars(totalVisibleCars);
+  };
 
-   console.log(error);
-   return (
-     <main>
-       <SearchBox onSubmit={handleSubmit} />
-       {error && <ErrorMessage>{error}</ErrorMessage>}
-       <ul>
-         {dataMovies.map(dataMovie => (
-           <li key={dataMovie.id}>
-             <Link to={`/movies/${dataMovie.id}`} state={{ from: location }}>
-               {dataMovie.title}
-             </Link>
-           </li>
-         ))}
-       </ul>
-     </main>
-   );
- };
+  useEffect(() => {
+    const fetchCars2 = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const results = await fetchCars();
+        setCars(results);
+      } catch (error) {
+        setError('Error, try reloading the page');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchCars2();
+  }, []);
+  console.log(cars);
+
+  return (
+    <main>
+      <TitleHidden>Car for rent</TitleHidden>
+      {!isLoading && error && <ErrorMessage>{error}</ErrorMessage>}
+      {isLoading && <Loader />}
+      {!error && cars.length > 0 && (
+        <>
+          <CarGallary cars={cars.slice(0, visibleCars)} />
+          {showLoadMore && (<ButtonWrap>
+            <ButtonLoadMore type="button" onClick={loadMoreCars}>
+              Load more
+            </ButtonLoadMore>
+            </ButtonWrap>
+          )}
+        </>
+      )}
+    </main>
+  );
+};
+
 
 export default Catalog;
+
+

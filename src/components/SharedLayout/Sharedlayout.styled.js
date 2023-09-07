@@ -31,10 +31,11 @@ export const Link = styled(NavLink)`
   border-radius: 4px;
   text-decoration: none;
   color: black;
+  font-size: 14px;
   font-weight: 500;
 
   &.active {
     color: white;
-    background-color: #034efc;
+    background-color: #0b44cd;
   }
 `;

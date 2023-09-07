@@ -1,33 +1,93 @@
+
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   CardWrap,
   Img,
+  ImageContainer,
+  IconWrap,
   SubtitleCard,
+  SubtitleCardBlue,
   SubtitleWrap,
   TextWrap,
+  IconHeart,
+  IconHeartEmpty,
 } from './CarCard.styled';
 
 import { ButtonLearnMore } from '../ButtonLearnMore/ButtonLearnMore';
+// import  {Modal}  from '../Modal/Modal';
 
-import PropTypes from 'prop-types';
+function toggleFavorite(carId) {
+  const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+  const carIndex = favorites.indexOf(carId);
+  if (carIndex !== -1) {
+    
+    favorites.splice(carIndex, 1);
+  } else {
+   
+    favorites.push(carId);
+  }
+
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+}
+
 
 export const CarCard = ({ car }) => {
-   
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+
+ 
+ const [isFavorites, setIsFavorites] = useState(
+   JSON.parse(localStorage.getItem('favorites'))?.includes(car.id) || false
+ );
+
+ const toggleFavorites = () => {
+   setIsFavorites(!isFavorites);
+   toggleFavorite(car.id);
+  };
+  
+//  const toggleModal = () => {
+//    setIsModalOpen(!isModalOpen);
+//   };
+  
   return (
     <CardWrap>
-      <Img src={car.img} alt={car.make} />
+      <ImageContainer>
+        <Img src={car.img} alt={car.make} />
+        <IconWrap>
+          {isFavorites ? (
+            <IconHeart onClick={toggleFavorites} />
+          ) : (
+            <IconHeartEmpty onClick={toggleFavorites} />
+          )}
+        </IconWrap>
+      </ImageContainer>
+
       <TextWrap>
         <SubtitleWrap>
           <div>
-            <SubtitleCard>{`${car.make} ${car.model}, ${car.year}`}</SubtitleCard>
+            <SubtitleCard>
+              {`${car.make} `}
+              <SubtitleCardBlue>{`${car.model}`}</SubtitleCardBlue>
+              {`, ${car.year}`}
+            </SubtitleCard>
           </div>
           <div>
             <SubtitleCard>{`${car.rentalPrice}`}</SubtitleCard>
           </div>
         </SubtitleWrap>
         <p>{`${car.address} | ${car.rentalCompany} `}</p>
-        {/* <p>{`${car.type} | ${car.model} | ${car.id} | ${car.functionalities}`}</p> */}
+        <p>{`${car.type} | ${car.model} | ${car.id}`}</p>
       </TextWrap>
-      <ButtonLearnMore /> 
+      <ButtonLearnMore>Learn more</ButtonLearnMore>
+      {/* <Modal
+        // isOpen={isModalOpen}
+        // onClose={toggleModal}
+        // onClose={onClose}
+        // shouldDisplay={shouldDisplayModal}
+      >
+        <h2>Аренда автомобіля</h2>
+      </Modal> */}
     </CardWrap>
   );
 };
@@ -43,6 +103,6 @@ CarCard.propTypes = {
     rentalCompany: PropTypes.string.isRequired,
     accessories: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
     type: PropTypes.string.isRequired,
-    functionalities: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
+    functionalities: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   }).isRequired,
 };

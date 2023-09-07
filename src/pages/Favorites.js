@@ -1,41 +1,57 @@
 import { useEffect, useState } from 'react';
-import { CarGallary } from 'components/CarGallary/CarGallary';
 import { Loader } from '../components/Loader/Loader';
 import { fetchCars } from '../services/api';
 import { ErrorMessage } from '../components/ErrorMessage.styled';
+import { CarGallary } from 'components/CarGallary/CarGallary';
 
 const Favorites = () => {
+  const [favoriteCarsId, setFavoriteCarsId] = useState([]);
+  const [filteredCars, setFilteredCars] = useState([]);
   const [cars, setCars] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
- 
 
   useEffect(() => {
-    const fetchCars2 = async () => {
+    const fetchCars3 = async () => {
       try {
         setIsLoading(true);
         setError(null);
         const results = await fetchCars();
-               setCars(results);
+        setCars(results);
       } catch (error) {
         setError('Error, try reloading the page');
       } finally {
         setIsLoading(false);
       }
     };
-    fetchCars2();
+
+    const savedFavoriteCarsId =
+      JSON.parse(localStorage.getItem('favorites')) || [];
+    setFavoriteCarsId(savedFavoriteCarsId);
+
+    fetchCars3();
   }, []);
-  console.log(cars);
-  
+
+  useEffect(() => {
+    const filtered = cars.filter(car => favoriteCarsId.includes(car.id));
+    setFilteredCars(filtered);
+  }, [favoriteCarsId, cars]);
+
   return (
     <main>
-      <h1>Car for rent</h1>
       {!isLoading && error && <ErrorMessage>{error}</ErrorMessage>}
       {isLoading && <Loader />}
-      {!error && (cars.length>0) && <CarGallary cars={cars} />}
+      {!error && (
+        <>
+          {filteredCars.length > 0 ? (
+            <CarGallary cars={filteredCars} />
+          ) : (
+            <p>Your list of favorite cars is empty</p>
+          )}
+        </>
+      )}
     </main>
   );
 };
-
 
 export default Favorites;
