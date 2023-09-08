@@ -26,7 +26,7 @@ export const IconWrap = styled.div`
  position: absolute;
             top: 14px;
             right: 14px;
-            z-index: 9;
+            z-index: 2;
 `;
 
 export const IconHeart = styled(IoMdHeart)`
@@ -68,3 +68,10 @@ export const TextWrap = styled.div`
   gap: 8px;
 `;
 
+export const TextWrapAddress = styled.div`
+  display: flex;
+ 
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+`;

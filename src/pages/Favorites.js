@@ -3,6 +3,8 @@ import { Loader } from '../components/Loader/Loader';
 import { fetchCars } from '../services/api';
 import { ErrorMessage } from '../components/ErrorMessage.styled';
 import { CarGallary } from 'components/CarGallary/CarGallary';
+import SidebarComponent from 'components/SideBar/SideBar';
+
 
 const Favorites = () => {
   const [favoriteCarsId, setFavoriteCarsId] = useState([]);
@@ -39,6 +41,7 @@ const Favorites = () => {
 
   return (
     <main>
+      <SidebarComponent/>
       {!isLoading && error && <ErrorMessage>{error}</ErrorMessage>}
       {isLoading && <Loader />}
       {!error && (

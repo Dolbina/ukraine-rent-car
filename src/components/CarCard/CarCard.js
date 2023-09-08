@@ -12,10 +12,12 @@ import {
   TextWrap,
   IconHeart,
   IconHeartEmpty,
+  TextWrapAddress,
 } from './CarCard.styled';
 
 import { ButtonLearnMore } from '../ButtonLearnMore/ButtonLearnMore';
-// import  {Modal}  from '../Modal/Modal';
+
+
 
 function toggleFavorite(carId) {
   const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
@@ -34,31 +36,30 @@ function toggleFavorite(carId) {
 
 
 export const CarCard = ({ car }) => {
-  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const address = car.address;
+  const parts = address.split(', ');
+  const city = parts[1];
+  const country = parts[2];
 
- 
- const [isFavorites, setIsFavorites] = useState(
-   JSON.parse(localStorage.getItem('favorites'))?.includes(car.id) || false
- );
+  const [isFavorites, setIsFavorites] = useState(
+    JSON.parse(localStorage.getItem('favorites'))?.includes(car.id) || false
+  );
 
- const toggleFavorites = () => {
-   setIsFavorites(!isFavorites);
-   toggleFavorite(car.id);
+  const toggleFavorites = () => {
+    setIsFavorites(!isFavorites);
+    toggleFavorite(car.id);
   };
-  
-//  const toggleModal = () => {
-//    setIsModalOpen(!isModalOpen);
-//   };
-  
+
+
   return (
     <CardWrap>
       <ImageContainer>
         <Img src={car.img} alt={car.make} />
         <IconWrap>
           {isFavorites ? (
-            <IconHeart onClick={toggleFavorites} />
+            <IconHeart aria-label="heart" onClick={toggleFavorites} />
           ) : (
-            <IconHeartEmpty onClick={toggleFavorites} />
+            <IconHeartEmpty aria-label="heart" onClick={toggleFavorites} />
           )}
         </IconWrap>
       </ImageContainer>
@@ -76,18 +77,12 @@ export const CarCard = ({ car }) => {
             <SubtitleCard>{`${car.rentalPrice}`}</SubtitleCard>
           </div>
         </SubtitleWrap>
-        <p>{`${car.address} | ${car.rentalCompany} `}</p>
-        <p>{`${car.type} | ${car.model} | ${car.id}`}</p>
+        <TextWrapAddress>
+          <p>{`${city} | ${country} | ${car.rentalCompany} `}</p>
+          <p>{`${car.type} | ${car.model} | ${car.id}`}</p>
+        </TextWrapAddress>
       </TextWrap>
-      <ButtonLearnMore>Learn more</ButtonLearnMore>
-      {/* <Modal
-        // isOpen={isModalOpen}
-        // onClose={toggleModal}
-        // onClose={onClose}
-        // shouldDisplay={shouldDisplayModal}
-      >
-        <h2>Аренда автомобіля</h2>
-      </Modal> */}
+      <ButtonLearnMore car={car}>Learn more</ButtonLearnMore>
     </CardWrap>
   );
 };
