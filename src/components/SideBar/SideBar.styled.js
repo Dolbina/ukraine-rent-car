@@ -15,6 +15,8 @@ export const Sidebar = styled.aside`
   justify-content: space-between;
 `;
 
+
+
 export const SidebarContent = styled.div`
  
 `;
@@ -33,6 +35,21 @@ export const SidebarLink = styled.a`
  
 `;
 
+export const BurgerButton = styled.button`
+  position: fixed;
+  top: 20px;
+  left: 80px;
+  z-index: 5;
+  border: none;
+  background-color: transparent;
+`;
 
+export const CloseButton = styled.button`
+  position: absolute;
+  top: 16px;
+  right:16px;
+  z-index: 8;
+  border: none; 
+`;
 
 

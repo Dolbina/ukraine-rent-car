@@ -21,9 +21,8 @@ export const Header = styled.header`
   }
 `;
 
-export const Logo = styled.p`
-  font-weight: 700;
-  margin: 0;
+export const LogoWrap = styled.p`
+  margin-right: 8px;
 `;
 
 export const Link = styled(NavLink)`
@@ -38,4 +37,12 @@ export const Link = styled(NavLink)`
     color: white;
     background-color: #0b44cd;
   }
+`;
+
+
+
+export const ContactInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  color: #121417;
 `;
