@@ -1,6 +1,6 @@
 This application was created to provide car rental services in Ukraine.
 
-- Home page with a general description of the services provided by the company.
+Home page with a general description of the services provided by the company.
 
 "/catalog" - Page containing a catalog of cars with different configurations.
 
