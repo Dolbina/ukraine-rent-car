@@ -39,7 +39,7 @@ const Catalog = () => {
     };
     fetchCars2();
   }, []);
-  console.log(cars);
+ 
 
   return (
     <main>
