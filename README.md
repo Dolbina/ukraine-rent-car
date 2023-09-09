@@ -9,4 +9,4 @@ This application was created to provide car rental services in Ukraine.
 For development, a backend was used on the UI service https://mockapi.io/.
 
 The technology stack used in the project:
-HTML CSS JavaScript React styled-components axios Visual Studio Code Figma Git GitHub
+HTML, CSS, JavaScript, React, styled-components, axios, Visual Studio Code, Figma, Git, GitHub.
