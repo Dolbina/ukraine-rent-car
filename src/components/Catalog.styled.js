@@ -55,24 +55,3 @@ export const InputRight = styled.input`
    border: none;
 `;
 
-export const ButtonSearch = styled.button`
-  padding: 14px 44px;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  border-radius: 12px;
-  background-color: #3470ff;
-  color: #fff;
-  font-family: inherit;
-  font-size: 14px;
-
-  font-weight: 600;
-  line-height: 1.43;
-  border: none;
-  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
-
-  &:hover,
-  &:focus {
-    background-color: #0b44cd;
-  }
-`;
