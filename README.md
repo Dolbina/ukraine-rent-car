@@ -1,5 +1,4 @@
 # Car for rent
-***
 ### About the project
 This application was created to provide car rental services in Ukraine. On the website you can choose a suitable car and book it. Sort by car brand, mileage, price. It is possible to add a car to your favorite one.
 
